@@ -52,7 +52,7 @@ namespace Neural
 
         private void uczbutton1_Click(object sender, EventArgs e)
         {
-            activationNetwork = new ActivationNetwork(new BipolarSigmoidFunction (1), 20, 80,18, 3);
+            activationNetwork = new ActivationNetwork(new BipolarSigmoidFunction (0.4), 20, 400,18, 3);
             activationNetwork.Randomize();
             BackPropagationLearning train = new BackPropagationLearning(activationNetwork);
             InpOut training = fx.DaneDoTreningu(Convert.ToInt32(dokadTreningtextBox3.Text), 5, 4, 1000);
