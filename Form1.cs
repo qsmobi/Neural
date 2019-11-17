@@ -56,7 +56,7 @@ namespace Neural
             activationNetwork.Randomize();
             BackPropagationLearning train = new BackPropagationLearning(activationNetwork);
             InpOut training = fx.DaneDoTreningu(Convert.ToInt32(dokadTreningtextBox3.Text), 5, 4, 1000);
-            
+            //
             double errorperepoch;
             for (int i = 1; i < 3000; i++)
             {
