@@ -52,23 +52,12 @@ namespace Neural
 
         private void uczbutton1_Click(object sender, EventArgs e)
         {
-            activationNetwork = new ActivationNetwork(new BipolarSigmoidFunction (1), 20, 80,18, 3);
-            activationNetwork.Randomize();
-            BackPropagationLearning train = new BackPropagationLearning(activationNetwork);
-            InpOut training = fx.DaneDoTreningu(Convert.ToInt32(dokadTreningtextBox3.Text), 5, 4, 1000);
+            var net = new DistanceNetwork(20, 400);
+
+            var tester = new SOMLearning(net, 5, 4);
+            tester.RunEpoch()
+
             
-            double errorperepoch;
-            for (int i = 1; i < 3000; i++)
-            {
-                errorperepoch = 0;
-                for (int j = 0; j < 1000; j++)
-                {
-                    double error = train.Run(training.Inp[j], training.Ut[j]);
-                     errorperepoch += error;
-                }
-                if (i % 100 == 0)
-                    Console.WriteLine("i={0}; {1}", i,errorperepoch /= 1000);
-            }
         }
 
         private void testbutton1_Click(object sender, EventArgs e)
