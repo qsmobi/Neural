@@ -55,7 +55,7 @@ namespace Neural
             var net = new DistanceNetwork(20, 400);
 
             var tester = new SOMLearning(net, 5, 4);
-            tester.RunEpoch()
+            tester.RunEpoch();
 
             
         }
