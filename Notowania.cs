@@ -36,7 +36,7 @@ namespace Neural
         public double[] PrzygotujOdpowiedz(int p,int dl, out double H,out double L)
         {
             // powinno byc p= k
-            double[] w = new double[3];
+            double[] w = new double[10];
             double pocz = Close[p]; //Ostatnia swieczka w ciagu wejściowym
             double max = 0;double min = 10000;
         
@@ -52,15 +52,21 @@ namespace Neural
             }
             double ymin =  Math.Round((min - pocz) / Pipval, 1);
             double ymax = Math.Round((max - pocz) / Pipval, 1);
-            
-            w[0] = ymin > -15 && ymax >= 20 ? 1 : 0;
-            w[0] = ymin <= -20 && ymax < 15 ? -1 : w[0];
-
-            w[1] = ymin > -20 && ymax >= 30 ? 1 : 0;
-            w[1] = ymin <= -30 && ymax < 20 ? -1 : w[1];
-
-            w[2] = ymin > -30 && ymax >= 40 ? 1 : 0;
-            w[2] = ymin <= -40 && ymax < 30 ? -1 : w[2];
+            for (int k = 4; k >= 0; k--)
+                if (ymax / ((k+1) * 10) >= 1)
+                {
+                    w[k] = 1;
+                    break;
+                }
+            for (int k=9;k>=5;k--)
+            {
+                int d = (k - 4) * 10;
+                if (ymin/d<=-1)
+                {
+                    w[k] = 1;
+                    break;
+                }
+            }
             H = ymax;
             L = ymin;
             return w;
@@ -81,14 +87,7 @@ namespace Neural
             }
             return w;
         }
-        private double[] Digits3(double x)
-        {
-            double[] ans=new double[3];
-            string s = x.ToString("000");
-            for (int i = 0; i < 3; i++)
-                ans[i] = Convert.ToDouble(s[i].ToString());
-            return ans;
-        }
+      
         
     }
     public class InpOut
