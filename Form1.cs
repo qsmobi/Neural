@@ -52,10 +52,10 @@ namespace Neural
 
         private void uczbutton1_Click(object sender, EventArgs e)
         {
-            activationNetwork = new ActivationNetwork(new SigmoidFunction (0.4), 20, 160,80, 10);
+            activationNetwork = new ActivationNetwork(new SigmoidFunction (0.4), 32, 160,80, 10);
             activationNetwork.Randomize();
             BackPropagationLearning train = new BackPropagationLearning(activationNetwork) {LearningRate=0.2 };
-            InpOut training = fx.DaneDoTreningu(Convert.ToInt32(dokadTreningtextBox3.Text), 5, 12, 1000);
+            InpOut training = fx.DaneDoTreningu(Convert.ToInt32(dokadTreningtextBox3.Text), 8, 12, 1000);
             //
             double errorperepoch;
             for (int i = 1; i < 5000; i++)
@@ -76,7 +76,7 @@ namespace Neural
         {
             double h, l;
             int p = Convert.ToInt32(dokadTreningtextBox3.Text);
-            double[] inp = fx.PrzygotujWejscie(p, 5);
+            double[] inp = fx.PrzygotujWejscie(p, 8);
             double[] ut = fx.PrzygotujOdpowiedz(p, 12,out h,out l);
             double[] odp=activationNetwork.Compute(inp);
             double[] odp1 = odp.Take(5).ToArray();
