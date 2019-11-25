@@ -54,15 +54,18 @@ namespace Neural
         {
             activationNetwork = new ActivationNetwork(new SigmoidFunction (0.4), 32, 160,80, 10);
             activationNetwork.Randomize();
-            BackPropagationLearning train = new BackPropagationLearning(activationNetwork) {LearningRate=0.2 };
+            BackPropagationLearning train = new BackPropagationLearning(activationNetwork) {LearningRate=0.6 };
             InpOut training = fx.DaneDoTreningu(Convert.ToInt32(dokadTreningtextBox3.Text), 8, 12, 1000);
             //
             double errorperepoch;
             for (int i = 1; i < 5000; i++)
             {
+                if (i == 2400)
+                    train.LearningRate = 0.1;
                 errorperepoch = 0;
                 for (int j = 0; j < 1000; j++)
                 {
+                   
                     double error = train.Run(training.Inp[j], training.Ut[j]);
                      errorperepoch += error;
                     
