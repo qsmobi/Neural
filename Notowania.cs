@@ -33,16 +33,16 @@ namespace Neural
             return w;
 
         }
-        public double[] PrzygotujOdpowiedz(int p,int dl, out double H,out double L)
+        public double[] PrzygotujOdpowiedz(int p, int dl, out double H, out double L)
         {
             // powinno byc p= k
-            double[] w = new double[10];
+            double[] w = new double[2]; // WYNIK
             double pocz = Close[p]; //Ostatnia swieczka w ciagu wejściowym
-            double max = 0;double min = 10000;
-        
-            for (int  i=p+1;i<p+dl+1;i++) //p+1 - pierwsza swieczka w ciagu wyjsciowym
+            double max = 0; double min = 10000;
+
+            for (int i = p + 1; i < p + dl + 1; i++) //p+1 - pierwsza swieczka w ciagu wyjsciowym
             {
-                
+
                 if (min > Open[i]) min = Open[i];
                 if (min > Low[i]) min = Low[i];
                 if (min > Close[i]) min = Close[i];
@@ -50,22 +50,18 @@ namespace Neural
                 if (max < High[i]) max = High[i];
                 if (max < Close[i]) max = Close[i];
             }
-            double ymin =  Math.Round((min - pocz) / Pipval, 1);
+            double ymin = Math.Round((min - pocz) / Pipval, 1);
             double ymax = Math.Round((max - pocz) / Pipval, 1);
-            for (int k = 4; k >= 0; k--)
-                if (ymax / ((k+1) * 10) >= 1)
-                {
-                    w[k] = 1;
-                    break;
-                }
-            for (int k=9;k>=5;k--)
+            w[0] = w[1] = 0;
+            if (max > -min && max > 20 && min > -10)
             {
-                int d = (k - 4) * 10;
-                if (ymin/d<=-1)
-                {
-                    w[k] = 1;
-                    break;
-                }
+                w[0] = 0;
+                w[1] = 1;
+            }
+            if (max < -min && max < 10 && min < -20)
+            {
+                w[0] = 1;
+                w[1] = 0;
             }
             H = ymax;
             L = ymin;
