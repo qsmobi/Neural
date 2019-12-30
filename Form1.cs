@@ -87,8 +87,8 @@ namespace Neural
 
             Hlabel4.Text = h.ToString();
             Llabel5.Text = l.ToString();
-            HPredicted.Text = odp1.ToString("0.1");
-            LPredicted.Text = odp2.ToString("0.1");
+            HPredicted.Text = odp1.ToString();
+            LPredicted.Text = odp2.ToString();
 
         }
     }
